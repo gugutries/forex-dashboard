@@ -1,48 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>💱 USD⇄INR Forex Dashboard</title>
-    <style>
-        body {
-            background: linear-gradient(to right, #141E30, #243B55);
-            color: white;
-            font-family: 'Segoe UI', sans-serif;
-            padding: 2rem;
-            text-align: center;
-        }
-        h1 {
-            font-size: 3rem;
-            color: #FFD700;
-        }
-        h2 {
-            font-size: 2rem;
-            color: #00FFFF;
-        }
-        .updated {
-            color: #aaa;
-            font-size: 0.9rem;
-        }
-        .download-link {
-            color: cyan;
-            margin-top: 1rem;
-            display: block;
-            font-weight: bold;
-        }
-        iframe {
-            border: none;
-            width: 100%;
-            height: 600px;
-            margin-top: 2rem;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>💱 USD⇄INR Forex Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 2rem;
+      font-family: 'Inter', sans-serif;
+      background: radial-gradient(circle at 20% 20%, #0f2027, #203a43, #2c5364);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.08);
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(8px);
+      border-radius: 1rem;
+      padding: 2rem;
+      width: 90%;
+      max-width: 900px;
+      margin-bottom: 2rem;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    h1, h2 {
+      margin: 0.3em 0;
+    }
+
+    h1 {
+      font-size: 2.8rem;
+      color: #FFD700;
+    }
+
+    h2 {
+      font-size: 2rem;
+      color: #00FFFF;
+    }
+
+    .meta {
+      font-size: 0.9rem;
+      color: #aaa;
+      margin-top: 0.5em;
+    }
+
+    .download {
+      margin-top: 1em;
+      font-weight: bold;
+    }
+
+    .download a {
+      color: #00CED1;
+      text-decoration: none;
+      transition: 0.2s;
+    }
+
+    .download a:hover {
+      color: #40E0D0;
+      text-decoration: underline;
+    }
+
+    .plot-container {
+      margin-top: 1rem;
+    }
+  </style>
 </head>
 <body>
+
+  <div class="card">
     <h1>💸 USD to INR = ₹{{ usd_inr }}</h1>
-    <h2>INR to USD = ${{ inr_usd }}</h2>
-    <p class="updated">Last updated: {{ updated }}</p>
-    <a class="download-link" href="/download">⬇️ Download last 100 rates as CSV</a>
+    <h2>↔️ INR to USD = ${{ inr_usd }}</h2>
+    <p class="meta">Last updated: {{ updated }}</p>
+    <div class="download">⬇️ <a href="/download">Download last 100 rates as CSV</a></div>
+  </div>
+
+  <div class="card plot-container">
+    <h2 style="margin-bottom: 1rem;">📈 USD → INR Trend</h2>
     {{ plot_html | safe }}
+  </div>
+
 </body>
 </html>
-
