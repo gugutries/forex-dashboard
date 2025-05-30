@@ -1,1 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>💱 USD⇄INR Forex Dashboard</title>
+    <style>
+        body {
+            background: linear-gradient(to right, #141E30, #243B55);
+            color: white;
+            font-family: 'Segoe UI', sans-serif;
+            padding: 2rem;
+            text-align: center;
+        }
+        h1 {
+            font-size: 3rem;
+            color: #FFD700;
+        }
+        h2 {
+            font-size: 2rem;
+            color: #00FFFF;
+        }
+        .updated {
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+        .download-link {
+            color: cyan;
+            margin-top: 1rem;
+            display: block;
+            font-weight: bold;
+        }
+        iframe {
+            border: none;
+            width: 100%;
+            height: 600px;
+            margin-top: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>💸 USD to INR = ₹{{ usd_inr }}</h1>
+    <h2>INR to USD = ${{ inr_usd }}</h2>
+    <p class="updated">Last updated: {{ updated }}</p>
+    <a class="download-link" href="/download">⬇️ Download last 100 rates as CSV</a>
+    {{ plot_html | safe }}
+</body>
+</html>
 
