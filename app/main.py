@@ -1,3 +1,6 @@
+from fastapi.templating import Jinja2Templates
+from fastapi.requests import Request
+import os
 from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
 from app import forex_utils
@@ -5,21 +8,30 @@ import plotly.graph_objects as go
 from plotly.io import to_html
 
 app = FastAPI()
+templates = Jinja2Templates(directory="app/templates")
 
 @app.get("/", response_class=HTMLResponse)
-async def dashboard():
+async def dashboard(request: Request):
     try:
         usd_inr, inr_usd, updated = forex_utils.fetch_usd_inr_rate()
         forex_utils.store_rates(usd_inr, inr_usd)
         df = forex_utils.get_last_forex_rates()
     except Exception as e:
-        return f"<h1 style='color:red'>Error: {e}</h1>"
+        return f"<h1 style='color:red;'>Error: {e}</h1>"
 
-    # Plot
     fig = go.Figure()
     fig.add_trace(go.Scatter(x=df["timestamp"], y=df["usd_to_inr"], mode="lines+markers", name="USD→INR"))
     fig.update_layout(template="plotly_dark", title="USD → INR Trend", xaxis_title="Time", yaxis_title="Rate")
 
+    plot_html = to_html(fig, include_plotlyjs="cdn", full_html=False)
+
+    return templates.TemplateResponse("index.html", {
+        "request": request,
+        "usd_inr": usd_inr,
+        "inr_usd": inr_usd,
+        "updated": updated,
+        "plot_html": plot_html
+    })
     # HTML
     return f"""
     <html>
