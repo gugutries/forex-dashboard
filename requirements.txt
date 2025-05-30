@@ -3,4 +3,4 @@ uvicorn
 httpx
 pandas
 plotly
-
+jinja2
